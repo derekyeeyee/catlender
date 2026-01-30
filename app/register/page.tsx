@@ -1,7 +1,39 @@
 // app/register/page.tsx
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+
+  const router = useRouter();
+
+  const [name, setName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault(); // 🚫 stop page refresh
+
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.error || "Something went wrong");
+      return;
+    }
+
+    router.push("/login");
+  }
+
   return (
     <main className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
 
@@ -25,7 +57,7 @@ export default function RegisterPage() {
         </p>
 
         {/* Register Form */}
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit = {handleSubmit}>
           
           {/* Name */}
           <div>
@@ -38,6 +70,8 @@ export default function RegisterPage() {
             <input
               id="name"
               type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               placeholder="Your name"
             />
@@ -54,8 +88,11 @@ export default function RegisterPage() {
             <input
               id="email"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               placeholder="you@example.com"
+              required
             />
           </div>
 
@@ -70,8 +107,11 @@ export default function RegisterPage() {
             <input
               id="password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               placeholder="••••••••"
+              required
             />
           </div>
 
@@ -86,6 +126,8 @@ export default function RegisterPage() {
             <input
               id="confirm-password"
               type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               placeholder="••••••••"
             />
