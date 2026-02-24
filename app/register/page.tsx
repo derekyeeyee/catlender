@@ -62,7 +62,7 @@ export default function RegisterPage() {
         </h1>
 
         <p className="text-center text-slate-400 mb-8">
-          Join Catlender and start organizing your days.
+          Join Catlendar and start organizing your days.
         </p>
 
         {/* Register Form */}

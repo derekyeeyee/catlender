@@ -56,7 +56,7 @@ export default function LoginPage() {
         </h1>
 
         <p className="text-center text-slate-400 mb-8">
-          Log in to your Catlender account
+          Log in to your Catlendar account
         </p>
 
         <form className="space-y-6" onSubmit = {handleSubmit}>

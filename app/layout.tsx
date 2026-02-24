@@ -3,8 +3,11 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Catlender",
-  description: "My calendar app",
+  title: "Catlendar",
+  description: "a calendar app for right now, cats will come later",
+  icons: {
+    icon: "/icon.png"
+  },
 };
 
 export default function RootLayout({
